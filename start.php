@@ -33,7 +33,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             mysqli_stmt_execute($stmt);
             $result = mysqli_stmt_get_result($stmt);
 
-            $stmt1 = mysqli_prepare($conn, "SELECT `Код_гостя` FROM $table WHERE `Логин` = ? AND `Пароль` = ?");
+            if ($userType == 'гости') {
+                $stmt1 = mysqli_prepare($conn, "SELECT `Код_гостя` FROM $table WHERE `Логин` = ? AND `Пароль` = ?");
+              } else if ($userType == 'администраторы') {
+                  $stmt1 = mysqli_prepare($conn, "SELECT `Код_администратора` FROM $table WHERE `Логин` = ? AND `Пароль` = ?");
+            }          
             mysqli_stmt_bind_param($stmt1, 'ss', $username, $password);
             mysqli_stmt_execute($stmt1);
             $resultID = mysqli_stmt_get_result($stmt1);
@@ -118,7 +122,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="password" id="Пароль" name="Пароль">
             <input type="submit" value="Войти">
         </form>
-        <a href="register.php" class="register-button">Зарегистрироваться</a>
     </div>
 </div>
 

@@ -180,13 +180,13 @@ if ($_SESSION['userType'] == 'гости') {
               <div class="navs-item notbtn"><a href="index.php" class="txt-uppercase">WorldTaste</a></div>
               <div class="navs-item notbtn"><a href="menu.php" class="txt-uppercase">Меню</a></div>
               <div class="navs-item notbtn"><a href="rests.php" class="txt-uppercase">Рестораны</a></div>
-            <? if($flag == 1){ ?>
-                            <div class="navs-item"><a href="lk_guest.php"><button class="btn txt-uppercase shadow-sm">Личный кабинет</button></a></div>
-                            <div class="navs-item"><a href="logout.php"><button class="btn txt-uppercase shadow-sm">Выход</button></a></div>
-                        <? }else{ ?>
-                <div class="navs-item"><a href="./start.php"><button class="btn txt-uppercase shadow-sm">Вход</a></div>
-                <div class="navs-item"><a href="./register.php"><button class="btn txt-uppercase shadow-sm">Регистрация</a></div>
-            <? } ?> 
+              <?php if(isset($flag) && $flag == 1): ?>
+                    <div class="navs-item"><a href="<?php echo ($_SESSION['userType'] == 'гости') ? 'lk_guest.php' : 'lk_admin.php'; ?>"><button class="btn txt-uppercase shadow-sm">Личный кабинет</button></a></div>
+                    <div class="navs-item"><a href="logout.php"><button class="btn txt-uppercase shadow-sm">Выход</button></a></div>
+                <?php else: ?>
+                    <div class="navs-item"><a href="./start.php"><button class="btn txt-uppercase shadow-sm">Вход</button></a></div>
+                    <div class="navs-item"><a href="./register.php"><button class="btn txt-uppercase shadow-sm">Регистрация</button></a></div>
+                <?php endif; ?> 
             </div>
           </div>
         </div>

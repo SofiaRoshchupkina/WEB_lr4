@@ -250,28 +250,16 @@ body {
 .login-form input[type="submit"] {
 	width: 100%;
 	padding: 10px;
-	background-color: #007BFF;
+	background-color: #a16840;
 	color: white;
 	border: none;
 	border-radius: 4px;
 	cursor: pointer;
 }
 .login-form input[type="submit"]:hover {
-	background-color: #0056b3;
+	background-color: #a16840;
 }
-.register-button {
-	display: block;
-	padding: 10px;
-	background-color: #5cb85c;
-	color: white;
-	text-align: center;
-	text-decoration: none;
-	border-radius: 4px;
-	margin-top: 15px;
-}
-.register-button:hover {
-	background-color: #4cae4c;
-}
+
 .user-type-switch {
 	display: flex;
 	align-items: center;
@@ -291,7 +279,7 @@ body {
 	display: none;
 }
 .user-type-switch input[type="radio"]:checked + label {
-	background-color: #007BFF;
+	background-color: #a16840;
 	color: #fff;
 }
 /*таблицы*/

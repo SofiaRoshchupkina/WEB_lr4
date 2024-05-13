@@ -79,8 +79,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $password = mysqli_real_escape_string($conn, $password);
 
         // Вставка данных в таблицу гости
-        $sql = "INSERT INTO гости (ФИО, Телефон, Email, Логин, Пароль)
-                VALUES ('$fio', '$phone', '$mail', '$login', '$password')";
+        $sql = "INSERT INTO гости (ФИО, Телефон, Email, Логин, Пароль) VALUES ('$fio', '$phone', '$mail', '$login', '$password')";
+            if (mysqli_query($conn, $sql)) {
+                echo "Данные успешно добавлены в таблицу гости";
+            } else {
+                echo "Ошибка при добавлении данных: " . mysqli_error($conn);
+            }
+
 
         if ($conn->query($sql) === TRUE) {
             header("Location: start.php");
