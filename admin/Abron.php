@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $date = $_POST['date'];
     $time = $_POST['time'];
     $persons = $_POST['persons'];
-    $admin_branch_code = $_SESSION['user']['Код_филиала'];
+    $admin_branch_code = $_SESSION['branchCode'];
 
     $sql = "INSERT INTO бронирования (Код_гостя, Код_филиала, Дата_бронирования, Время_бронирования, Количество_персон) VALUES ('$guest', '$admin_branch_code', '$date', '$time', '$persons')";
     if (mysqli_query($conn, $sql)) {
@@ -33,6 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         display: flex;
         justify-content: center;
         align-items: center;
+        margin-top: 20px; /* Отступ от header */
     }
 
     .containerid {
@@ -48,13 +49,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         border: 1px solid #ccc;
         padding: 20px;
         border-radius: 10px;
-        background-color: #f9f9f9;
+        background-color: #fff;
     }
 
     .form-group {
-        margin-bottom: 20px;
-    }
-    .form-group-time {
         margin-bottom: 20px;
     }
 
@@ -63,12 +61,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         margin-bottom: 5px;
     }
 
-    input[type="date"],
-    select {
-        width: 100%;
+    .input-field {
+        width: 100%; /* одинаковая длина для всех полей ввода */
         padding: 8px;
         border-radius: 5px;
         border: 1px solid #ccc;
+        box-sizing: border-box; /* чтобы ширина включала padding и border */
     }
 
     button[type="submit"] {
@@ -76,14 +74,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         padding: 10px;
         border: none;
         border-radius: 5px;
-        background-color: #4caf50;
+        background-color: #a16840;
         color: white;
         font-size: 16px;
         cursor: pointer;
     }
 
     button[type="submit"]:hover {
-        background-color: #45a049;
+        background-color: #794e30
     }
 </style>
     <title>Бронирования</title>
@@ -91,33 +89,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 
 <header>
-    <div class="navbar">
+  <div class="navbar">
         <div class="container">
-            <div class="navbar-nav">
-                <div class="navs" id="navs">
-                    <div class="navs-item notbtn"><a href="index.php" class="txt-uppercase">WorldTaste</a></div>
-                    <div class="navs-item notbtn"><a href="menu.php" class="txt-uppercase">Меню</a></div>
-                    <div class="navs-item notbtn"><a href="rests.php" class="txt-uppercase">Рестораны</a></div>
-                    <?php if($flag == 1): ?>
-                        <div class="navs-item"><a href="<?php echo ($_SESSION['userType'] == 'гости') ? 'lk_guest.php' : 'lk_admin.php'; ?>"><button class="btn txt-uppercase shadow-sm">Личный кабинет</button></a></div>
-                        <div class="navs-item"><a href="logout.php"><button class="btn txt-uppercase shadow-sm">Выход</button></a></div>
-                    <?php else: ?>
-                        <div class="navs-item"><a href="./start.php"><button class="btn txt-uppercase shadow-sm">Вход</button></a></div>
-                        <div class="navs-item"><a href="./register.php"><button class="btn txt-uppercase shadow-sm">Регистрация</button></a></div>
-                    <?php endif; ?> 
-                </div>
+          <div class="navbar-nav">
+            <div class="navs" id="navs">
+                <div class="navs-item"><a href="lk_admin.php"><button class="btn txt-uppercase shadow-sm">Личный кабинет</button></a></div>
+                <div class="navs-item"><a href="logout.php"><button class="btn txt-uppercase shadow-sm">Выход</button></a></div>
             </div>
+          </div>
         </div>
-    </div>
+  </div>
 </header>
 
 <section class="booking-section">
     <div class="containerid">
-        <h2>Бронирование столика</h2>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
         <div class="form-group">
+        <h2>Бронирование столика</h2>
             <label for="guest">Код гостя:</label>
-            <select name="guest" id="guest">
+            <select name="guest" id="guest" class="input-field">
                 <?php
                 $namerest = "SELECT `Код_гостя` FROM `гости`";
                 $result = mysqli_query($conn, $namerest);
@@ -127,13 +117,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ?>
             </select>
         </div>
-            <div class="form-group-time">
+            <div class="form-group">
                 <label for="date">Дата бронирования:</label>
-                <input type="date" id="date" name="date" required>
+                <input type="date" id="date" name="date" class="input-field" required>
             </div>
             <div class="form-group">
                 <label for="time">Время бронирования:</label>
-                <select name="time" id="time" required>
+                <select name="time" id="time" class="input-field" required>
                     <?php
                     $start = strtotime('10:00');
                     $end = strtotime('21:00');
@@ -146,7 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="form-group">
                 <label for="persons">Количество персон:</label>
-                <select name="persons" id="persons" required>
+                <select name="persons" id="persons" class="input-field" required>
                     <?php
                     for ($i = 1; $i <= 10; $i++) {
                         echo '<option value="' . $i . '">' . $i . '</option>';
@@ -158,7 +148,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
     </div>
 </section>
-
 
 </body>
 </html>
